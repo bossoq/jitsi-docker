@@ -534,7 +534,6 @@ RUN  \
         --enable-libsrt \
         --enable-libtheora \
         --enable-libvidstab \
-        --enable-libvmaf \
         --enable-libvorbis \
         --enable-libvpx \
         --enable-libwebp \
