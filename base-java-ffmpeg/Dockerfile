@@ -1,4 +1,4 @@
-ARG JITSI_REPO=jitsi
+ARG JITSI_REPO=bossoq
 FROM ${JITSI_REPO}/base-java AS base
 
 WORKDIR     /tmp/workdir
