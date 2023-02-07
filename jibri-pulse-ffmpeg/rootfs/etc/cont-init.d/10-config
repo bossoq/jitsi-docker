@@ -17,6 +17,11 @@ if [[ "$JIBRI_XMPP_PASSWORD" == "$OLD_JIBRI_XMPP_PASSWORD" ]]; then
     exit 1
 fi
 
+# Copy ffmpeg helper script
+mkdir /opt/util && echo '' > /opt/util/logs && chmod 777 /opt/util/logs && chmod -R 777 /dev/dri && \
+cp /config/ffmpeg /usr/bin/ffmpeg && \
+chmod +x /usr/bin/ffmpeg
+
 # DISPLAY is necessary for start
 [ -z "${DISPLAY}" ] \
 && ( echo -e "\e[31mERROR: Please set DISPLAY variable.\e[39m"; kill 1; exit 1 )
