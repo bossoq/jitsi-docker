@@ -1,7 +1,7 @@
 FROM --platform=linux/amd64 jrottenberg/ffmpeg:5.1.2-vaapi2004
 
 ARG JITSI_RELEASE=stable
-ARG S6_ARCH=x86_64
+ARG S6_ARCH=amd64
 ARG TPL_ARCH=amd64
 ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=2
 
@@ -11,7 +11,7 @@ RUN \
     apt-dpkg-wrap apt-get update && \
     apt-dpkg-wrap apt-get install -y apt-transport-https apt-utils ca-certificates gnupg wget && \
     wget -qO /usr/bin/tpl https://github.com/jitsi/tpl/releases/download/v1.0.4/tpl-linux-${TPL_ARCH} && \
-    wget -qO - https://github.com/just-containers/s6-overlay/releases/download/v3.1.3.0/s6-overlay-${S6_ARCH}.tar.xz | tar xJf - -C / && \
+    wget -qO - https://github.com/just-containers/s6-overlay/releases/download/v2.2.0.3/s6-overlay-${S6_ARCH}.tar.gz | tar xfz - -C / && \
     wget -qO - https://download.jitsi.org/jitsi-key.gpg.key | gpg --dearmour > /etc/apt/trusted.gpg.d/jitsi.gpg && \
     echo "deb https://download.jitsi.org $JITSI_RELEASE/" > /etc/apt/sources.list.d/jitsi.list && \
     # echo "deb http://ftp.debian.org/debian bullseye-backports main" > /etc/apt/sources.list.d/backports.list && \
