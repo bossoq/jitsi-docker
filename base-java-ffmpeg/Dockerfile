@@ -1,7 +1,7 @@
 FROM --platform=linux/amd64 jrottenberg/ffmpeg:5.1.2-vaapi2004
 
 ARG JITSI_RELEASE=stable
-ARG S6_ARCH=amd64
+ARG S6_ARCH=x86_64
 ARG TPL_ARCH=amd64
 ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=2
 
