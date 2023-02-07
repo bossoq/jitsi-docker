@@ -12,6 +12,7 @@ ARG CHROMEDRIVER_MAJOR_RELEASE=109
 COPY rootfs/ /
 
 RUN apt-dpkg-wrap apt-get update && \
+    apt-dpkg-wrap install -y fontconfig && \
     apt-dpkg-wrap apt-get install -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" jibri libgl1-mesa-dri procps jitsi-upload-integrations jq pulseaudio dbus dbus-x11 rtkit unzip && \
     /usr/bin/install-chrome.sh && \
     apt-cleanup && \
