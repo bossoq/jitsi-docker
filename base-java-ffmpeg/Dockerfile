@@ -4,7 +4,7 @@ FROM ${JITSI_REPO}/base-java AS base
 WORKDIR /tmp/workdir
 
 RUN     apt-get -yqq update && \
-    apt-get install -yq --no-install-recommends ca-certificates expat libgomp1 && \
+    apt-get install -yq --no-install-recommends ca-certificates expat libgomp1 libfribidi0 && \
     apt-get autoremove -y && \
     apt-get clean -y
 
@@ -16,7 +16,7 @@ ENV     FFMPEG_VERSION=5.1.2 \
     FDKAAC_VERSION=0.1.5 \
     FONTCONFIG_VERSION=2.12.4 \
     FREETYPE_VERSION=2.10.4 \
-    FRIBIDI_VERSION=0.19.7 \
+    # FRIBIDI_VERSION=0.19.7 \
     KVAZAAR_VERSION=2.0.0 \
     LAME_VERSION=3.100 \
     LIBASS_VERSION=0.13.7 \
@@ -48,7 +48,7 @@ ENV     FFMPEG_VERSION=5.1.2 \
     SRC=/usr/local
 
 ARG     FREETYPE_SHA256SUM="5eab795ebb23ac77001cfb68b7d4d50b5d6c7469247b0b01b2c953269f658dac freetype-2.10.4.tar.gz"
-ARG     FRIBIDI_SHA256SUM="3fc96fa9473bd31dcb5500bdf1aa78b337ba13eb8c301e7c28923fea982453a8 0.19.7.tar.gz"
+# ARG     FRIBIDI_SHA256SUM="3fc96fa9473bd31dcb5500bdf1aa78b337ba13eb8c301e7c28923fea982453a8 0.19.7.tar.gz"
 ARG     LIBASS_SHA256SUM="8fadf294bf701300d4605e6f1d92929304187fca4b8d8a47889315526adbafd7 0.13.7.tar.gz"
 ARG     LIBVIDSTAB_SHA256SUM="14d2a053e56edad4f397be0cb3ef8eb1ec3150404ce99a426c4eb641861dc0bb v1.1.0.tar.gz"
 ARG     OGG_SHA256SUM="e19ee34711d7af328cb26287f4137e70630e7261b17cbe3cd41011d73a654692 libogg-1.3.2.tar.gz"
@@ -292,19 +292,19 @@ RUN  \
     make install && \
     rm -rf ${DIR}
 ## fridibi https://www.fribidi.org/
-RUN  \
-    DIR=/tmp/fribidi && \
-    mkdir -p ${DIR} && \
-    cd ${DIR} && \
-    curl -sLO https://github.com/fribidi/fribidi/archive/${FRIBIDI_VERSION}.tar.gz && \
-    echo ${FRIBIDI_SHA256SUM} | sha256sum --check && \
-    tar -zx --strip-components=1 -f ${FRIBIDI_VERSION}.tar.gz && \
-    sed -i 's/^SUBDIRS =.*/SUBDIRS=gen.tab charset lib bin/' Makefile.am && \
-    ./bootstrap --no-config --auto && \
-    ./configure --prefix="${PREFIX}" --disable-static --enable-shared && \
-    make -j1 && \
-    make install && \
-    rm -rf ${DIR}
+# RUN  \
+#     DIR=/tmp/fribidi && \
+#     mkdir -p ${DIR} && \
+#     cd ${DIR} && \
+#     curl -sLO https://github.com/fribidi/fribidi/archive/${FRIBIDI_VERSION}.tar.gz && \
+#     echo ${FRIBIDI_SHA256SUM} | sha256sum --check && \
+#     tar -zx --strip-components=1 -f ${FRIBIDI_VERSION}.tar.gz && \
+#     sed -i 's/^SUBDIRS =.*/SUBDIRS=gen.tab charset lib bin/' Makefile.am && \
+#     ./bootstrap --no-config --auto && \
+#     ./configure --prefix="${PREFIX}" --disable-static --enable-shared && \
+#     make -j1 && \
+#     make install && \
+#     rm -rf ${DIR}
 ## fontconfig https://www.freedesktop.org/wiki/Software/fontconfig/
 RUN  \
     DIR=/tmp/fontconfig && \
