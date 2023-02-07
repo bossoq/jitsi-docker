@@ -9,6 +9,8 @@ ARG USE_CHROMIUM=0
 ARG CHROME_RELEASE=109.0.5414.74
 ARG CHROMEDRIVER_MAJOR_RELEASE=109
 
+RUN mv /usr/local/bin/ffmpeg /usr/local/bin/ffmpeg-original
+
 COPY rootfs/ /
 
 RUN apt-dpkg-wrap apt-get update && \
