@@ -14,10 +14,7 @@ RUN mv /usr/local/bin/ffmpeg /usr/local/bin/ffmpeg-original
 COPY rootfs/ /
 
 RUN apt-dpkg-wrap apt-get update && \
-    apt-dpkg-wrap apt-get install -y fontconfig software-properties-common && \
-    apt-add-repository non-free && \
-    apt-dpkg-wrap apt-get update && \
-    apt-dpkg-wrap apt-get install -y intel-media-va-driver-non-free && \
+    apt-dpkg-wrap apt-get install -y fontconfig && \
     apt-dpkg-wrap apt-get install -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" jibri libgl1-mesa-dri procps jitsi-upload-integrations jq pulseaudio dbus dbus-x11 rtkit unzip && \
     /usr/bin/install-chrome.sh && \
     apt-cleanup && \

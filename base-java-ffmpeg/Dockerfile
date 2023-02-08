@@ -3,10 +3,10 @@ FROM ${JITSI_REPO}/base-java AS base
 
 WORKDIR /tmp/workdir
 
-RUN     apt-get -yqq update && \
-    apt-get install -yq --no-install-recommends ca-certificates expat libgomp1 && \
-    apt-get autoremove -y && \
-    apt-get clean -y
+RUN     apt-dpkg-wrap apt-get -yqq update && \
+    apt-dpkg-wrap apt-get install -yq --no-install-recommends ca-certificates expat libgomp1 && \
+    apt-dpkg-wrap apt-get autoremove -y && \
+    apt-cleanup
 
 FROM base as build
 
@@ -237,6 +237,7 @@ RUN  \
     --disable-ffplay \
     --enable-gpl \
     --enable-libfdk_aac \
+    --enable-libpulse \
     --enable-libmp3lame \
     --enable-libvorbis \
     --enable-libvpx \
@@ -283,6 +284,10 @@ ENV         LD_LIBRARY_PATH=/usr/local/lib:/usr/local/lib64
 COPY --from=build /usr/local /usr/local/
 
 RUN \
-    apt-get update -y && \
-    apt-get install -y --no-install-recommends libva-drm2 libva2 i965-va-driver && \
+    apt-dpkg-wrap apt-get update -y && \
+    apt-dpkg-wrap apt-get install -y software-properties-common && \
+    apt-add-repository non-free && \
+    apt-dpkg-wrap apt-get update && \
+    apt-dpkg-wrap apt-get install -y intel-media-va-driver-non-free && \
+    apt-dpkg-wrap apt-get install -y --no-install-recommends libva-drm2 libva2 intel-media-va-driver-non-free && \
     rm -rf /var/lib/apt/lists/*
