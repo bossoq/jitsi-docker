@@ -228,6 +228,11 @@ RUN  \
     ./configure     --disable-debug  --disable-doc    --disable-ffplay   --enable-shared --enable-gpl  --extra-libs=-ldl && \
     make ;  make install
 
+RUN \
+    apt-dpkg-wrap apt-get update && \
+    apt-dpkg-wrap apt-get install -y libpulse-dev && \
+    apt-cleanup
+
 ## Build ffmpeg https://ffmpeg.org/
 RUN  \
     DIR=/tmp/ffmpeg && cd ${DIR} && \
